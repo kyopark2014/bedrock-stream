@@ -1,5 +1,28 @@
 # bedrock-stream
 
+## LangChain 활용
+
+[Conversation Chain With Streaming](https://python.langchain.com/docs/integrations/llms/bedrock#conversation-chain-with-streaming)을 활용하여 streaming을 구현합니다. 
+
+```python
+from langchain.llms import Bedrock
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+
+
+llm = Bedrock(
+    credentials_profile_name="bedrock-admin",
+    model_id="amazon.titan-tg1-large",
+    streaming=True,
+    callbacks=[StreamingStdOutCallbackHandler()],
+)
+
+conversation = ConversationChain(
+    llm=llm, verbose=True, memory=ConversationBufferMemory()
+)
+
+conversation.predict(input="Hi there!")
+```
+
 ## Bedrock API를 활용
 
 [invoke_model_with_response_stream](https://docs.aws.amazon.com/bedrock/latest/APIReference/API_InvokeModelWithResponseStream.html)을 이용하여 아래와 같이 stream으로 결과를 얻을 수 있습니다.
